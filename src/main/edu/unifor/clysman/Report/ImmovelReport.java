@@ -62,12 +62,10 @@ public class ImmovelReport {
         double sumOfArea = nobreAreaApartments.stream()
                 .mapToDouble(Immovel::area)
                 .sum();
-        double avgAreaOfNobreAreaApartments;
+        double avgAreaOfNobreAreaApartments = 0;
 
         if (size > 0)
             avgAreaOfNobreAreaApartments = sumOfArea / size;
-        else
-            avgAreaOfNobreAreaApartments = 0.0;
 
         System.out.println("Média da área dos apartamentos nobres:");
         System.out.println("Média: " + avgAreaOfNobreAreaApartments);
