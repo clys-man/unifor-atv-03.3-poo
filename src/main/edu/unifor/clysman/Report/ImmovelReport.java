@@ -5,6 +5,7 @@ import edu.unifor.clysman.Immovel.Type;
 import edu.unifor.clysman.Repository.ImmovelRepository;
 
 import java.util.Comparator;
+import java.util.List;
 
 public class ImmovelReport {
     private final ImmovelRepository immovelRepository;
@@ -20,6 +21,7 @@ public class ImmovelReport {
         printIPTUAndSalePriceOfAllImmovels();
         printOwnerOfImmovelsWithAgeGreaterThan10();
         printQtyOfApartmentsAndHouses();
+        printAvgOfAreaOfNobreAreaApartments();
         printLowestIPTUOfNotNobreAreaHouse();
         printAreaOfImmovelWithLowestSalePrice();
     }
@@ -50,6 +52,25 @@ public class ImmovelReport {
                 .count();
         System.out.println("Apartamentos: " + qtyOfApartments);
         System.out.println("Casas: " + qtyOfHouses);
+    }
+
+    private void printAvgOfAreaOfNobreAreaApartments() {
+        List<Immovel> nobreAreaApartments = immovelRepository
+                .where(immovel -> immovel.isNobreArea() && immovel.type() == Type.APARTMENT)
+                .get();
+        int size = nobreAreaApartments.size();
+        double sumOfArea = nobreAreaApartments.stream()
+                .mapToDouble(Immovel::area)
+                .sum();
+        double avgAreaOfNobreAreaApartments;
+
+        if (size > 0)
+            avgAreaOfNobreAreaApartments = sumOfArea / size;
+        else
+            avgAreaOfNobreAreaApartments = 0.0;
+
+        System.out.println("Média da área dos apartamentos nobres:");
+        System.out.println("Média: " + avgAreaOfNobreAreaApartments);
     }
 
     private void printLowestIPTUOfNotNobreAreaHouse() {
